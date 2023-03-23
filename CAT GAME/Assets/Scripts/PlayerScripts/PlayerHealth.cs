@@ -7,6 +7,7 @@ public class PlayerHealth : MonoBehaviour
 {
     public int health = 20;
     public Rigidbody2D Player;
+    [SerializeField] AudioSource DeathFx;
 
     public void TakeDamage(int damage)
     {
@@ -15,6 +16,7 @@ public class PlayerHealth : MonoBehaviour
 
         if (health <= 0)
         {
+            DeathFx.Play();
             Player.bodyType = RigidbodyType2D.Static;
             GetComponent<Animator>().SetTrigger("DIED");
             Invoke("Die", 2);

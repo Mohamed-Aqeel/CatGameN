@@ -7,6 +7,7 @@ public class EnemyHealth : MonoBehaviour
     public int Health = 20;
     public int CurrentHealth;
     public Animator Anim;
+    [SerializeField] AudioSource DieFx;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +21,7 @@ public class EnemyHealth : MonoBehaviour
 
         if (CurrentHealth <= 0)
         {
+            DieFx.Play();
             Invoke("Die", 2);
         }
     }

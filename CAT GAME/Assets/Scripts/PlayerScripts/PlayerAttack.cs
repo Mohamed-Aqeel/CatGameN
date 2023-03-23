@@ -11,8 +11,7 @@ public class PlayerAttack : MonoBehaviour
     public int AttackDamage = 100;
     public float AttackRate = 2f;
     public float NextAttackTime = 0f;
-
-    public float AttackRange { get => attackRange; set => attackRange = value; }
+    [SerializeField] AudioSource HitSound;
 
     // Start is called before the first frame update
     void Start()
@@ -36,9 +35,10 @@ public class PlayerAttack : MonoBehaviour
 
     void ATK()
     {
+        HitSound.Play();
         Anim.SetTrigger("Hit");
 
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(AttackPoint.position, AttackRange, EnemyLayers);
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(AttackPoint.position, attackRange, EnemyLayers);
 
         foreach (Collider2D Enemy in hitEnemies)
         {
@@ -52,6 +52,6 @@ public class PlayerAttack : MonoBehaviour
 
             return;
 
-        Gizmos.DrawWireSphere(AttackPoint.position, AttackRange);
+        Gizmos.DrawWireSphere(AttackPoint.position, attackRange);
     }
 }

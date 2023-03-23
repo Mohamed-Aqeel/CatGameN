@@ -5,6 +5,7 @@ using UnityEngine;
 public class TrapEnemy : MonoBehaviour
 {
     public Rigidbody2D Player;
+    [SerializeField] AudioSource DieSound;
 
     // Start is called before the first frame update
     void Start()
@@ -16,7 +17,7 @@ public class TrapEnemy : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Trap"))
         {
-
+            DieSound.Play();
             Die();
         }
     }
