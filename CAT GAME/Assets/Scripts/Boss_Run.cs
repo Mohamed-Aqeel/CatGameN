@@ -4,27 +4,31 @@ using UnityEngine;
 
 public class Boss_Run : StateMachineBehaviour
 {
-    public float RunRange = 100f;
+    // public float RunRange = 100f;
+
+
     public float speed = 2.5f;
+    public float attackRange = 3f;
+
     Transform player;
-    Rigidbody2D Rb;
-    EnemyFlip Boss;
-    public float AttackRange = 3f;
+    Rigidbody2D rb;
+    EnemyFlip boss;
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        Rb = animator.GetComponent<Rigidbody2D>();
-        Boss = animator.GetComponent<EnemyFlip>();
+        rb = animator.GetComponent<Rigidbody2D>();
+        boss = animator.GetComponent<EnemyFlip>();
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Boss.LookAtPlayer();
-        Vector2 target = new Vector2(player.position.x, Rb.position.y);
-        Vector2 NewPos = Vector2.MoveTowards(Rb.position, target, speed * Time.fixedDeltaTime);
-        Rb.MovePosition(NewPos);
+        boss.LookAtPlayer();
 
-        if (Vector2.Distance(player.position,Rb.position)<= AttackRange)
+        Vector2 target = new Vector2(player.position.x, rb.position.y);
+        Vector2 newPos = Vector2.MoveTowards(rb.position, target, speed * Time.fixedDeltaTime);
+        rb.MovePosition(newPos);
+
+        if (Vector2.Distance(player.position, rb.position) <= attackRange)
         {
             animator.SetTrigger("Attack");
         }

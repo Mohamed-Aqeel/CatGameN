@@ -5,7 +5,6 @@ using UnityEngine;
 public class EnemyWeapon : MonoBehaviour
 {
     public int attackDamage = 20;
-
     public Vector3 attackOffset;
     public float attackRange = 1f;
     public LayerMask attackMask;
@@ -22,6 +21,7 @@ public class EnemyWeapon : MonoBehaviour
             colInfo.GetComponent<PlayerHealth>().TakeDamage(attackDamage);
         }
     }
+
 
     void OnDrawGizmosSelected()
     {

@@ -1,12 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class TrapDeath : MonoBehaviour
+public class TrapEnemy : MonoBehaviour
 {
     public Rigidbody2D Player;
-  
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,7 +16,7 @@ public class TrapDeath : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Trap"))
         {
-           
+
             Die();
         }
     }
@@ -26,8 +25,7 @@ public class TrapDeath : MonoBehaviour
     {
 
         Player.bodyType = RigidbodyType2D.Static;
-        GetComponent<Animator>().SetTrigger("DIED");
+        GetComponent<Animator>().SetTrigger("Dead");
     }
 
-    
 }

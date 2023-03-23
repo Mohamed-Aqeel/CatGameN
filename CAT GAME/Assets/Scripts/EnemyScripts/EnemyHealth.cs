@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
-    public int Health = 100;
+    public int Health = 20;
     public int CurrentHealth;
     public Animator Anim;
 
@@ -16,7 +16,7 @@ public class EnemyHealth : MonoBehaviour
 
     public void TakeDamage(int Damage)
     {
-        
+        Health -= Damage;
 
         if (CurrentHealth <= 0)
         {
@@ -27,7 +27,7 @@ public class EnemyHealth : MonoBehaviour
     public void Die()
     {
         Debug.Log("Enemy Died");
-        Anim.SetBool("Death", true);
+        Anim.SetBool("Dead", true);
 
         GetComponent<Collider2D>().enabled = false;
         this.enabled = false;

@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public int health = 100;
+    public int health = 20;
     public Rigidbody2D Player;
 
     public void TakeDamage(int damage)
@@ -16,7 +16,7 @@ public class PlayerHealth : MonoBehaviour
         if (health <= 0)
         {
             Player.bodyType = RigidbodyType2D.Static;
-            GetComponent<Animator>().SetTrigger("Death");
+            GetComponent<Animator>().SetTrigger("DIED");
             Invoke("Die", 2);
         }
     }
@@ -27,5 +27,9 @@ public class PlayerHealth : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
+    private void RestartLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
 
 }

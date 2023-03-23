@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-
     public Animator Anim;
-    public Transform ATKPoint;
-    public float ATKRange = 0.5f;
+    public Transform AttackPoint;
+    public float attackRange = 0.5f;
     public LayerMask EnemyLayers;
-    public int ATKDamage = 100;
-    public float ATKRate = 2f;
-    public float NextATKTime = 0f;
-    public Vector3 attackOffset;
+    public int AttackDamage = 100;
+    public float AttackRate = 2f;
+    public float NextAttackTime = 0f;
+
+    public float AttackRange { get => attackRange; set => attackRange = value; }
 
     // Start is called before the first frame update
     void Start()
@@ -23,12 +23,12 @@ public class PlayerAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Time.time >= NextATKTime)
+        if (Time.time >= NextAttackTime)
         {
-            if (Input.GetKeyDown(KeyCode.LeftControl))
+            if (Input.GetMouseButtonDown(0))
             {
                 ATK();
-                NextATKTime = Time.time + 1 / ATKRate;
+                NextAttackTime = Time.time + 1 / AttackRate;
             }
         }
     }
@@ -36,27 +36,22 @@ public class PlayerAttack : MonoBehaviour
 
     void ATK()
     {
+        Anim.SetTrigger("Hit");
 
-        Vector3 pos = transform.position;
-        pos += transform.right * attackOffset.x;
-        pos += transform.up * attackOffset.y;
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(AttackPoint.position, AttackRange, EnemyLayers);
 
-        Collider2D colInfo = Physics2D.OverlapCircle(ATKPoint.position, ATKRange, EnemyLayers);
-        if (colInfo != null)
+        foreach (Collider2D Enemy in hitEnemies)
         {
-           // colInfo.GetComponent<Enemy>().TakeDamage(ATKDamage);
+            Enemy.GetComponent<EnemyHealth>().TakeDamage(AttackDamage);
         }
     }
 
     private void OnDrawGizmosSelected()
     {
-        Vector3 pos = transform.position;
-        pos += transform.right * attackOffset.x;
-        pos += transform.up * attackOffset.y;
+        if (AttackPoint == null)
 
-        if (ATKPoint == null)
             return;
 
-        Gizmos.DrawWireSphere(ATKPoint.position, ATKRange);
+        Gizmos.DrawWireSphere(AttackPoint.position, AttackRange);
     }
 }
